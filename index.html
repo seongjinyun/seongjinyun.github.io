@@ -85,11 +85,11 @@ function txtLeave() {
 }
 
 function txtLeaveDone() {
-    return String.fromCharCode(0xD1F4,0xADFC,0xC774,0xB2E4);
+    return String.fromCharCode(0xD1F4, 0xADFC, 0xC774, 0xB2E4);
 }
 
 function txtHour() {
-    return String.fromCharCode(0xC2DC,0xAC04);
+    return String.fromCharCode(0xC2DC, 0xAC04);
 }
 
 function txtMinute() {
@@ -101,7 +101,7 @@ function txtSecond() {
 }
 
 function txtUntil() {
-    return String.fromCharCode(0xAE4C,0xC9C0);
+    return String.fromCharCode(0xAE4C, 0xC9C0);
 }
 
 function pad(v) {
@@ -141,7 +141,6 @@ function updateClock() {
         var seconds = totalSeconds % 60;
 
         header.textContent =
-            "⏰ " +
             pad(currentHour) + ":" +
             pad(currentMinute) + ":" +
             pad(currentSecond) +
@@ -149,11 +148,14 @@ function updateClock() {
             txtLeave() +
             txtUntil() +
             " " +
-            hours + txtHour() +
+            hours +
+            txtHour() +
             " " +
-            minutes + txtMinute() +
+            minutes +
+            txtMinute() +
             " " +
-            seconds + txtSecond();
+            seconds +
+            txtSecond();
 
         var msg =
             txtLeave() +
@@ -179,11 +181,11 @@ function updateClock() {
     } else {
 
         header.textContent =
-            "🎉 " +
             pad(currentHour) + ":" +
             pad(currentMinute) + ":" +
             pad(currentSecond) +
-            " 🎉";
+            " | " +
+            txtLeaveDone();
 
         text.textContent =
             (txtLeaveDone() + "!!!!!!!!!!!! ").repeat(500);

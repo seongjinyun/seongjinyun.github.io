@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Leave Counter</title>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: Arial, sans-serif;
+    animation: bgChange 6s infinite alternate;
+    -webkit-text-size-adjust: none;
+}
+
+#header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 999;
+
+    font-size: clamp(18px, 5vw, 32px);
+}
+
+#text {
+    padding: 10px;
+    font-weight: bold;
+    line-height: 1.5;
+    word-break: break-all;
+    overflow-wrap: break-word;
+
+    font-size: clamp(14px, 3vw, 20px);
+
+    animation: rainbow 2s linear infinite;
+}
+
+@keyframes rainbow {
+    0%   { color: #ff0000; }
+    20%  { color: #ff8800; }
+    40%  { color: #00aa00; }
+    60%  { color: #0066ff; }
+    80%  { color: #aa00ff; }
+    100% { color: #ff0000; }
+}
+
+@keyframes bgChange {
+    0%   { background: #ffe5e5; }
+    25%  { background: #fff4cc; }
+    50%  { background: #e5ffe5; }
+    75%  { background: #e5f0ff; }
+    100% { background: #ffe5ff; }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.3;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="header"></div>
+<div id="text"></div>
+
+<script>
+
+function txtLeave() {
+    return String.fromCharCode(0xD1F4, 0xADFC);
+}
+
+function txtLeaveDone() {
+    return String.fromCharCode(
+        0xD1F4,
+        0xADFC,
+        0xC774,
+        0xB2E4
+    );
+}
+
+function txtHour() {
+    return String.fromCharCode(
+        0xC2DC,
+        0xAC04
+    );
+}
+
+function txtMinute() {
+    return String.fromCharCode(
+        0xBD84,
+        0xC804
+    );
+}
+
+function txtUntil() {
+    return String.fromCharCode(
+        0xAE4C,
+        0xC9C0
+    );
+}
+
+function updateClock() {
+
+    var now = new Date();
+
+    var start = new Date();
+    start.setHours(9, 0, 0, 0);
+
+    var end = new Date();
+    end.setHours(18, 0, 0, 0);
+
+    var header = document.getElementById("header");
+    var text = document.getElementById("text");
+
+    if (now >= start && now <= end) {
+
+        var diffMs = end.getTime() - now.getTime();
+
+        var totalMinutes = Math.floor(diffMs / 60000);
+
+        var hours = Math.floor(totalMinutes / 60);
+        var minutes = totalMinutes % 60;
+
+        header.textContent =
+            "? " +
+            txtLeave() +
+            txtUntil() +
+            " " +
+            hours +
+            txtHour() +
+            " " +
+            minutes +
+            txtMinute();
+
+        var msg =
+            txtLeave() +
+            "!!!!!!!!!!!!!!" +
+            hours +
+            txtHour() +
+            "!!!!!!!!!!!!!!" +
+            minutes +
+            txtMinute() +
+            "!!!!!!!!!!!!!! ";
+
+        text.textContent = msg.repeat(300);
+
+        if (hours === 0 && minutes <= 30) {
+            text.className = "blink";
+        } else {
+            text.className = "";
+        }
+
+    } else {
+
+        header.textContent = "? ? ? ? ?";
+
+        text.textContent =
+            (txtLeaveDone() + "!!!!!!!!!!!! ").repeat(500);
+
+        text.className = "blink";
+    }
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+</script>
+
+</body>
+</html>

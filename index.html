@@ -12,14 +12,14 @@ html, body {
     padding: 0;
     width: 100%;
     min-height: 100%;
+    overflow-x: hidden;
 }
 
 body {
-    overflow-y: auto;
-    overflow-x: hidden;
     font-family: Arial, sans-serif;
     animation: bgChange 6s infinite alternate;
     -webkit-text-size-adjust: none;
+    transition: background 0.3s ease;
 }
 
 #header {
@@ -61,16 +61,33 @@ body {
     100% { background: #ffe5ff; }
 }
 
-.blink {
-    animation: blink 0.7s infinite !important;
+/* 기본 흔들림 */
+.shake {
+    animation: shake 0.15s infinite;
 }
 
-@keyframes blink {
-    50% {
-        opacity: 0.2;
-    }
+/* 강한 진동 */
+.strongShake {
+    animation: strongShake 0.08s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0px, 0px) rotate(0deg); }
+    25% { transform: translate(3px, -2px) rotate(0.5deg); }
+    50% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+    75% { transform: translate(2px, 3px) rotate(0.3deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+@keyframes strongShake {
+    0% { transform: translate(0px, 0px) scale(1); }
+    25% { transform: translate(6px, -4px) scale(1.01); }
+    50% { transform: translate(-6px, 4px) scale(0.99); }
+    75% { transform: translate(4px, 6px) scale(1.02); }
+    100% { transform: translate(0px, 0px) scale(1); }
 }
 </style>
+
 </head>
 
 <body>
@@ -107,6 +124,39 @@ function txtUntil() {
 function pad(v) {
     return String(v).padStart(2, "0");
 }
+
+/* 랜덤 배경 */
+function randomBg() {
+    var colors = [
+        "#ffe5e5", "#fff4cc", "#e5ffe5",
+        "#e5f0ff", "#ffe5ff", "#e0ffff",
+        "#f5ffe0"
+    ];
+    document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+}
+
+/* 흔들림 효과 */
+function startShake() {
+
+    document.body.classList.add("strongShake");
+
+    randomBg();
+
+    setTimeout(function () {
+        document.body.classList.remove("strongShake");
+        document.body.classList.add("shake");
+
+        setTimeout(function () {
+            document.body.classList.remove("shake");
+        }, 1200);
+
+    }, 300);
+}
+
+/* 클릭 이벤트 */
+document.addEventListener("click", function () {
+    startShake();
+});
 
 function updateClock() {
 
@@ -170,13 +220,7 @@ function updateClock() {
             txtSecond() +
             "!!!!!!!!!!!!!! ";
 
-        text.textContent = msg.repeat(300);
-
-        if (hours === 0 && minutes <= 30) {
-            text.className = "blink";
-        } else {
-            text.className = "";
-        }
+        text.textContent = msg.repeat(250);
 
     } else {
 
@@ -189,8 +233,6 @@ function updateClock() {
 
         text.textContent =
             (txtLeaveDone() + "!!!!!!!!!!!! ").repeat(500);
-
-        text.className = "blink";
     }
 }
 

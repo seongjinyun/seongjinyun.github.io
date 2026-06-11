@@ -20,8 +20,10 @@ body {
     animation: bgChange 6s infinite alternate;
     -webkit-text-size-adjust: none;
     transition: background 0.3s ease;
+    position: relative;
 }
 
+/* 湲곗〈 UI */
 #header {
     position: sticky;
     top: 0;
@@ -44,6 +46,7 @@ body {
     animation: rainbow 2s linear infinite;
 }
 
+/* �븷�땲硫붿씠�뀡 �쑀吏� */
 @keyframes rainbow {
     0%   { color: #ff0000; }
     20%  { color: #ff8800; }
@@ -61,12 +64,10 @@ body {
     100% { background: #ffe5ff; }
 }
 
-/* 기본 흔들림 */
 .shake {
     animation: shake 0.15s infinite;
 }
 
-/* 강한 진동 */
 .strongShake {
     animation: strongShake 0.08s infinite;
 }
@@ -85,6 +86,61 @@ body {
     50% { transform: translate(-6px, 4px) scale(0.99); }
     75% { transform: translate(4px, 6px) scale(1.02); }
     100% { transform: translate(0px, 0px) scale(1); }
+}
+
+/* =========================
+   �윁� �굺�뿽 �슚怨�
+========================= */
+.leaf {
+    position: fixed;
+    top: -20px;
+    width: 12px;
+    height: 12px;
+    background: #d97706;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear forwards;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) translateX(80px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* =========================
+   �윊� �눜洹�! �뙆�떚�겢 �슚怨�
+========================= */
+.toegeun-particle {
+    position: fixed;
+    pointer-events: none;
+    font-weight: bold;
+    white-space: nowrap;
+    z-index: 9999;
+    animation: particleFly linear forwards;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transform-origin: center center;
+}
+
+@keyframes particleFly {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) rotate(var(--rot-start)) scale(1);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot-end)) scale(var(--scale-end));
+    }
 }
 </style>
 
@@ -125,22 +181,97 @@ function pad(v) {
     return String(v).padStart(2, "0");
 }
 
-/* 랜덤 배경 */
-function randomBg() {
-    var colors = [
-        "#ffe5e5", "#fff4cc", "#e5ffe5",
-        "#e5f0ff", "#ffe5ff", "#e0ffff",
-        "#f5ffe0"
-    ];
-    document.body.style.background = colors[Math.floor(Math.random() * colors.length)];
+/* =========================
+   �윁� �굺�뿽 �깮�꽦
+========================= */
+function createLeaf(x, y) {
+
+    var leaf = document.createElement("div");
+    leaf.className = "leaf";
+
+    leaf.style.left = x + "px";
+    leaf.style.top = y + "px";
+
+    var size = 8 + Math.random() * 12;
+    leaf.style.width = size + "px";
+    leaf.style.height = size + "px";
+
+    leaf.style.animationDuration = (2 + Math.random() * 3) + "s";
+
+    document.body.appendChild(leaf);
+
+    setTimeout(function () {
+        leaf.remove();
+    }, 5000);
 }
 
-/* 흔들림 효과 */
+/* =========================
+   �윊� �눜洹�! �뀓�뒪�듃 �뙆�떚�겢 �깮�꽦
+========================= */
+var particleColors = [
+    "#ff3b3b", "#ff8800", "#ffd600",
+    "#00bb44", "#0077ff", "#aa00ff",
+    "#ff44bb", "#00cccc"
+];
+
+function createToegeunParticle(x, y) {
+    var count = 6 + Math.floor(Math.random() * 5); // 6~10媛�
+
+    for (var i = 0; i < count; i++) {
+        (function () {
+            var el = document.createElement("div");
+            el.className = "toegeun-particle";
+            el.textContent = txtLeave() + "!";
+
+            var fontSize = 14 + Math.random() * 20; // 14~34px
+            el.style.fontSize = fontSize + "px";
+
+            var color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            el.style.color = color;
+
+            // �겢由� �쐞移� 以묒떖�쑝濡� �빟媛� �옖�뜡 �삤�봽�뀑
+            var offsetX = (Math.random() - 0.5) * 40;
+            var offsetY = (Math.random() - 0.5) * 40;
+            el.style.left = (x + offsetX) + "px";
+            el.style.top  = (y + offsetY) + "px";
+
+            // �궇�븘媛� 諛⑺뼢: �쟾諛⑹쐞濡�
+            var angle = Math.random() * 360;
+            var dist  = 80 + Math.random() * 160;
+            var tx = Math.cos(angle * Math.PI / 180) * dist;
+            var ty = Math.sin(angle * Math.PI / 180) * dist - (Math.random() * 60); // �빟媛� �쐞濡� �렪�뼢
+
+            el.style.setProperty("--tx", tx + "px");
+            el.style.setProperty("--ty", ty + "px");
+            el.style.setProperty("--rot-start", ((Math.random() - 0.5) * 30) + "deg");
+            el.style.setProperty("--rot-end",   ((Math.random() - 0.5) * 120) + "deg");
+            el.style.setProperty("--scale-end", (0.3 + Math.random() * 0.5).toString());
+
+            var duration = 600 + Math.random() * 600; // 0.6s~1.2s
+            el.style.animationDuration = duration + "ms";
+
+            document.body.appendChild(el);
+
+            setTimeout(function () {
+                el.remove();
+            }, duration + 50);
+        })();
+    }
+}
+
+/* =========================
+   �겢由� �떆 �굺�뿽 + �뙆�떚�겢 + �쓷�뱾由�
+========================= */
 function startShake() {
 
     document.body.classList.add("strongShake");
 
-    randomBg();
+    var x = Math.random() * window.innerWidth;
+    var y = 0;
+
+    for (var i = 0; i < 8; i++) {
+        createLeaf(x + (Math.random() * 80 - 40), y);
+    }
 
     setTimeout(function () {
         document.body.classList.remove("strongShake");
@@ -153,11 +284,19 @@ function startShake() {
     }, 300);
 }
 
-/* 클릭 이벤트 */
-document.addEventListener("click", function () {
+document.addEventListener("click", function (e) {
     startShake();
+
+    // �겢由� �쐞移섏뿉 �굺�뿽 �깮�꽦
+    createLeaf(e.clientX, e.clientY);
+
+    // �겢由� �쐞移섏뿉 �눜洹�! �뙆�떚�겢 �깮�꽦
+    createToegeunParticle(e.clientX, e.clientY);
 });
 
+/* =========================
+   湲곗〈 �떆媛� 濡쒖쭅 洹몃��濡� �쑀吏�
+========================= */
 function updateClock() {
 
     var now = new Date(

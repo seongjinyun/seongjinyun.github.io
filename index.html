@@ -1,50 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Leave Counter</title>
-
 <style>
 html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
+    margin: 0; padding: 0;
+    width: 100%; min-height: 100%;
     overflow-x: hidden;
 }
-
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
     animation: bgChange 6s infinite alternate;
     -webkit-text-size-adjust: none;
     transition: background 0.3s ease;
     position: relative;
 }
-
 #header {
-    position: sticky;
-    top: 0;
-    padding: 12px;
-    text-align: center;
+    position: sticky; top: 0;
+    padding: 12px; text-align: center;
     font-weight: bold;
     background: rgba(255,255,255,0.92);
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     z-index: 999;
     font-size: clamp(18px, 4vw, 30px);
 }
-
 #text {
-    padding: 10px;
-    font-weight: bold;
-    line-height: 1.5;
-    word-break: break-all;
+    padding: 10px; font-weight: bold;
+    line-height: 1.5; word-break: break-all;
     overflow-wrap: break-word;
     font-size: clamp(14px, 3vw, 20px);
     animation: rainbow 2s linear infinite;
 }
-
 @keyframes rainbow {
     0%   { color: #ff0000; }
     20%  { color: #ff8800; }
@@ -53,7 +41,6 @@ body {
     80%  { color: #aa00ff; }
     100% { color: #ff0000; }
 }
-
 @keyframes bgChange {
     0%   { background: #ffe5e5; }
     25%  { background: #fff4cc; }
@@ -61,223 +48,155 @@ body {
     75%  { background: #e5f0ff; }
     100% { background: #ffe5ff; }
 }
-
-.shake { animation: shake 0.15s infinite; }
+.shake     { animation: shake 0.15s infinite; }
 .strongShake { animation: strongShake 0.08s infinite; }
-
 @keyframes shake {
-    0%   { transform: translate(0px,0px) rotate(0deg); }
+    0%   { transform: translate(0,0) rotate(0deg); }
     25%  { transform: translate(3px,-2px) rotate(0.5deg); }
     50%  { transform: translate(-3px,2px) rotate(-0.5deg); }
     75%  { transform: translate(2px,3px) rotate(0.3deg); }
-    100% { transform: translate(0px,0px) rotate(0deg); }
+    100% { transform: translate(0,0) rotate(0deg); }
 }
-
 @keyframes strongShake {
-    0%   { transform: translate(0px,0px) scale(1); }
+    0%   { transform: translate(0,0) scale(1); }
     25%  { transform: translate(6px,-4px) scale(1.01); }
     50%  { transform: translate(-6px,4px) scale(0.99); }
     75%  { transform: translate(4px,6px) scale(1.02); }
-    100% { transform: translate(0px,0px) scale(1); }
+    100% { transform: translate(0,0) scale(1); }
 }
-
-/* �굺�뿽 */
 .leaf {
-    position: fixed;
-    top: -20px;
-    width: 12px;
-    height: 12px;
-    background: #d97706;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: fall linear forwards;
-    pointer-events: none;
-    z-index: 9998;
+    position: fixed; top: -20px;
+    width: 12px; height: 12px;
+    background: #d97706; border-radius: 50%;
+    opacity: 0.8; animation: fall linear forwards;
+    pointer-events: none; z-index: 9998;
 }
-
 @keyframes fall {
     0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
     100% { transform: translateY(110vh) translateX(80px) rotate(360deg); opacity: 0; }
 }
-
-/* �눜洹�! �뙆�떚�겢 */
 .toegeun-particle {
-    position: fixed;
-    pointer-events: none;
-    font-weight: bold;
-    white-space: nowrap;
-    z-index: 9999;
-    animation: particleFly linear forwards;
+    position: fixed; pointer-events: none;
+    font-weight: bold; white-space: nowrap;
+    z-index: 9999; animation: particleFly linear forwards;
     text-shadow: 0 2px 6px rgba(0,0,0,0.25);
     transform-origin: center center;
 }
-
 @keyframes particleFly {
     0%  { opacity: 1; transform: translate(0,0) rotate(var(--rot-start)) scale(1); }
     80% { opacity: 1; }
     100%{ opacity: 0; transform: translate(var(--tx),var(--ty)) rotate(var(--rot-end)) scale(var(--scale-end)); }
 }
 
-/* =========================
-   �슇截� �꽕�젙 �뙣�꼸
-========================= */
+/* 설정 버튼 */
 #settingBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
+    position: fixed; bottom: 20px; right: 20px;
     z-index: 10000;
     background: rgba(255,255,255,0.92);
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    font-size: 22px;
-    cursor: pointer;
+    border: 2px solid #ccc; border-radius: 50%;
+    width: 48px; height: 48px;
+    font-size: 22px; cursor: pointer;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s;
-    user-select: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s; user-select: none;
 }
 #settingBtn:hover { transform: scale(1.15); }
 
+/* 설정 패널 */
 #settingPanel {
     display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
+    position: fixed; bottom: 80px; right: 20px;
     z-index: 10000;
     background: rgba(255,255,255,0.97);
-    border: 2px solid #ddd;
-    border-radius: 16px;
+    border: 2px solid #ddd; border-radius: 16px;
     padding: 20px 24px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    min-width: 230px;
-    font-size: 15px;
+    min-width: 230px; font-size: 15px;
 }
-
 #settingPanel h3 {
-    margin: 0 0 14px 0;
-    font-size: 17px;
-    text-align: center;
-    color: #333;
+    margin: 0 0 14px 0; font-size: 17px;
+    text-align: center; color: #333;
 }
-
 .setting-row {
-    display: flex;
-    align-items: center;
+    display: flex; align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
-    gap: 10px;
+    margin-bottom: 12px; gap: 10px;
 }
-
-.setting-row label {
-    font-weight: bold;
-    color: #555;
-    white-space: nowrap;
-}
-
+.setting-row label { font-weight: bold; color: #555; white-space: nowrap; }
 .setting-row input[type="time"] {
-    border: 2px solid #bbb;
-    border-radius: 8px;
-    padding: 5px 8px;
-    font-size: 15px;
-    width: 110px;
-    outline: none;
-    transition: border-color 0.2s;
+    border: 2px solid #bbb; border-radius: 8px;
+    padding: 5px 8px; font-size: 15px; width: 110px;
+    outline: none; transition: border-color 0.2s;
 }
 .setting-row input[type="time"]:focus { border-color: #7c73e6; }
-
 #saveSettingBtn {
-    width: 100%;
-    margin-top: 6px;
-    padding: 9px 0;
+    width: 100%; margin-top: 6px; padding: 9px 0;
     background: linear-gradient(90deg, #ff6b6b, #ffd166, #06d6a0, #118ab2);
     background-size: 300% 100%;
     animation: gradMove 3s linear infinite;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
-    letter-spacing: 1px;
+    border: none; border-radius: 10px;
+    color: #fff; font-weight: bold; font-size: 15px;
+    cursor: pointer; letter-spacing: 1px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     transition: transform 0.1s;
 }
 #saveSettingBtn:active { transform: scale(0.97); }
-
 @keyframes gradMove {
     0%   { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
 }
-
 #savedMsg {
-    text-align: center;
-    color: #06d6a0;
-    font-weight: bold;
-    font-size: 13px;
-    margin-top: 8px;
-    height: 18px;
-    transition: opacity 0.4s;
+    text-align: center; color: #06d6a0;
+    font-weight: bold; font-size: 13px;
+    margin-top: 8px; height: 18px;
 }
 </style>
-
 </head>
 <body>
 
 <div id="header"></div>
 <div id="text"></div>
 
-<!-- �꽕�젙 踰꾪듉 -->
-<div id="settingBtn" title="異쒗눜洹� �떆媛� �꽕�젙">�슇截�</div>
+<div id="settingBtn">&#9881;&#65039;</div>
 
-<!-- �꽕�젙 �뙣�꼸 -->
 <div id="settingPanel">
-    <h3>�룿 異쒗눜洹� �떆媛� �꽕�젙</h3>
+    <h3>&#9200; &#52636;&#53748;&#44540; &#49884;&#44036; &#49444;&#51221;</h3>
     <div class="setting-row">
-        <label>異쒓렐 �떆媛�</label>
+        <label>&#52636;&#44540; &#49884;&#44036;</label>
         <input type="time" id="inputStart" value="09:00">
     </div>
     <div class="setting-row">
-        <label>�눜洹� �떆媛�</label>
+        <label>&#53748;&#44540; &#49884;&#44036;</label>
         <input type="time" id="inputEnd" value="18:00">
     </div>
-    <button id="saveSettingBtn">����옣</button>
+    <button id="saveSettingBtn">&#51200;&#51109;</button>
     <div id="savedMsg"></div>
 </div>
 
 <script>
-
-function txtLeave()     { return String.fromCharCode(0xD1F4, 0xADFC); }
-function txtLeaveDone() { return String.fromCharCode(0xD1F4, 0xADFC, 0xC774, 0xB2E4); }
-function txtHour()      { return String.fromCharCode(0xC2DC, 0xAC04); }
-function txtMinute()    { return String.fromCharCode(0xBD84); }
-function txtSecond()    { return String.fromCharCode(0xCD08); }
-function txtUntil()     { return String.fromCharCode(0xAE4C, 0xC9C0); }
+/* 한글 텍스트 — charCode로 안전하게 */
+function txtLeave()     { return "\uD1F4\uADFC"; }
+function txtLeaveDone() { return "\uD1F4\uADFC\uC774\uB2E4"; }
+function txtHour()      { return "\uC2DC\uAC04"; }
+function txtMinute()    { return "\uBD84"; }
+function txtSecond()    { return "\uCD08"; }
+function txtUntil()     { return "\uAE4C\uC9C0"; }
+function txtStart()     { return "\uCD9C\uADFC \uC2DC\uAC04"; }
+function txtEnd()       { return "\uD1F4\uADFC \uC2DC\uAC04"; }
+function txtSave()      { return "\uC800\uC7A5"; }
+function txtSaved()     { return "\u2705 \uC800\uC7A5\uB429\uC2B5\uB2C8\uB2E4!"; }
+function txtTitle()     { return "\uCD9C\uD1F4\uADFC \uC2DC\uAC04 \uC124\uC815"; }
 function pad(v)         { return String(v).padStart(2, "0"); }
 
-/* =========================
-   �윊� localStorage �떆媛� �꽕�젙
-========================= */
+/* localStorage */
 var startHour = 9, startMin = 0;
 var endHour = 18, endMin = 0;
 
 function loadSettings() {
     var s = localStorage.getItem("lc_start");
     var e = localStorage.getItem("lc_end");
-    if (s) {
-        var p = s.split(":");
-        startHour = parseInt(p[0], 10);
-        startMin  = parseInt(p[1], 10);
-    }
-    if (e) {
-        var p2 = e.split(":");
-        endHour = parseInt(p2[0], 10);
-        endMin  = parseInt(p2[1], 10);
-    }
-    // �씤�뭼�뿉�룄 諛섏쁺
+    if (s) { var p = s.split(":"); startHour = parseInt(p[0],10); startMin = parseInt(p[1],10); }
+    if (e) { var p2 = e.split(":"); endHour = parseInt(p2[0],10); endMin = parseInt(p2[1],10); }
     document.getElementById("inputStart").value = pad(startHour) + ":" + pad(startMin);
     document.getElementById("inputEnd").value   = pad(endHour)   + ":" + pad(endMin);
 }
@@ -286,74 +205,55 @@ function saveSettings() {
     var sv = document.getElementById("inputStart").value;
     var ev = document.getElementById("inputEnd").value;
     if (!sv || !ev) return;
-
     localStorage.setItem("lc_start", sv);
     localStorage.setItem("lc_end",   ev);
-
-    var sp = sv.split(":");
-    startHour = parseInt(sp[0], 10);
-    startMin  = parseInt(sp[1], 10);
-    var ep = ev.split(":");
-    endHour = parseInt(ep[0], 10);
-    endMin  = parseInt(ep[1], 10);
-
-    // ����옣 �셿猷� 硫붿떆吏�
+    var sp = sv.split(":"); startHour = parseInt(sp[0],10); startMin = parseInt(sp[1],10);
+    var ep = ev.split(":"); endHour   = parseInt(ep[0],10); endMin   = parseInt(ep[1],10);
     var msg = document.getElementById("savedMsg");
-    msg.textContent = "�쐟 ����옣�릱�뼱�슂!";
+    msg.textContent = txtSaved();
     setTimeout(function() { msg.textContent = ""; }, 2000);
-
     updateClock();
 }
 
-/* =========================
-   �슇截� �꽕�젙 �뙣�꼸 �넗湲�
-========================= */
+/* 설정 패널 토글 */
 var panel = document.getElementById("settingPanel");
 var btn   = document.getElementById("settingBtn");
+
+/* 패널 타이틀/레이블 텍스트를 JS로 삽입 (HTML 인코딩 대신) */
+document.querySelector("#settingPanel h3").textContent = "\u23F0 " + txtTitle();
+document.querySelectorAll(".setting-row label")[0].textContent = txtStart();
+document.querySelectorAll(".setting-row label")[1].textContent = txtEnd();
+document.getElementById("saveSettingBtn").textContent = txtSave();
 
 btn.addEventListener("click", function(e) {
     e.stopPropagation();
     panel.style.display = (panel.style.display === "block") ? "none" : "block";
 });
-
 document.getElementById("saveSettingBtn").addEventListener("click", function(e) {
     e.stopPropagation();
     saveSettings();
 });
-
-// �뙣�꼸 �쇅遺� �겢由� �떆 �떕湲� (�떒, �겢由� �씠踰ㅽ듃媛� �굺�뿽/�뙆�떚�겢�룄 �듃由ш굅�븯吏� �븡�룄濡�)
 document.addEventListener("click", function(e) {
     if (panel.style.display === "block" &&
-        !panel.contains(e.target) &&
-        e.target !== btn) {
+        !panel.contains(e.target) && e.target !== btn) {
         panel.style.display = "none";
     }
 });
 
-/* =========================
-   �윁� �굺�뿽 �깮�꽦
-========================= */
+/* 낙엽 */
 function createLeaf(x, y) {
     var leaf = document.createElement("div");
     leaf.className = "leaf";
-    leaf.style.left = x + "px";
-    leaf.style.top  = y + "px";
+    leaf.style.left = x + "px"; leaf.style.top = y + "px";
     var size = 8 + Math.random() * 12;
-    leaf.style.width  = size + "px";
-    leaf.style.height = size + "px";
+    leaf.style.width = size + "px"; leaf.style.height = size + "px";
     leaf.style.animationDuration = (2 + Math.random() * 3) + "s";
     document.body.appendChild(leaf);
     setTimeout(function() { leaf.remove(); }, 5000);
 }
 
-/* =========================
-   �윊� �눜洹�! �뙆�떚�겢
-========================= */
-var particleColors = [
-    "#ff3b3b","#ff8800","#ffd600",
-    "#00bb44","#0077ff","#aa00ff",
-    "#ff44bb","#00cccc"
-];
+/* 퇴근! 파티클 */
+var particleColors = ["#ff3b3b","#ff8800","#ffd600","#00bb44","#0077ff","#aa00ff","#ff44bb","#00cccc"];
 
 function createToegeunParticle(x, y) {
     var count = 6 + Math.floor(Math.random() * 5);
@@ -362,20 +262,17 @@ function createToegeunParticle(x, y) {
             var el = document.createElement("div");
             el.className = "toegeun-particle";
             el.textContent = txtLeave() + "!";
-            var fontSize = 14 + Math.random() * 20;
-            el.style.fontSize = fontSize + "px";
+            el.style.fontSize = (14 + Math.random() * 20) + "px";
             el.style.color = particleColors[Math.floor(Math.random() * particleColors.length)];
-            var offsetX = (Math.random() - 0.5) * 40;
-            var offsetY = (Math.random() - 0.5) * 40;
-            el.style.left = (x + offsetX) + "px";
-            el.style.top  = (y + offsetY) + "px";
+            el.style.left = (x + (Math.random()-0.5)*40) + "px";
+            el.style.top  = (y + (Math.random()-0.5)*40) + "px";
             var angle = Math.random() * 360;
             var dist  = 80 + Math.random() * 160;
-            el.style.setProperty("--tx", (Math.cos(angle * Math.PI / 180) * dist) + "px");
-            el.style.setProperty("--ty", (Math.sin(angle * Math.PI / 180) * dist - Math.random() * 60) + "px");
-            el.style.setProperty("--rot-start", ((Math.random() - 0.5) * 30) + "deg");
-            el.style.setProperty("--rot-end",   ((Math.random() - 0.5) * 120) + "deg");
-            el.style.setProperty("--scale-end", (0.3 + Math.random() * 0.5).toString());
+            el.style.setProperty("--tx", (Math.cos(angle*Math.PI/180)*dist) + "px");
+            el.style.setProperty("--ty", (Math.sin(angle*Math.PI/180)*dist - Math.random()*60) + "px");
+            el.style.setProperty("--rot-start", ((Math.random()-0.5)*30) + "deg");
+            el.style.setProperty("--rot-end",   ((Math.random()-0.5)*120) + "deg");
+            el.style.setProperty("--scale-end", (0.3 + Math.random()*0.5).toString());
             var dur = 600 + Math.random() * 600;
             el.style.animationDuration = dur + "ms";
             document.body.appendChild(el);
@@ -384,57 +281,44 @@ function createToegeunParticle(x, y) {
     }
 }
 
-/* =========================
-   �쓷�뱾由�
-========================= */
+/* 흔들림 */
 function startShake() {
     document.body.classList.add("strongShake");
     var x = Math.random() * window.innerWidth;
-    for (var i = 0; i < 8; i++) {
-        createLeaf(x + (Math.random() * 80 - 40), 0);
-    }
+    for (var i = 0; i < 8; i++) createLeaf(x + (Math.random()*80-40), 0);
     setTimeout(function() {
         document.body.classList.remove("strongShake");
         document.body.classList.add("shake");
-        setTimeout(function() {
-            document.body.classList.remove("shake");
-        }, 1200);
+        setTimeout(function() { document.body.classList.remove("shake"); }, 1200);
     }, 300);
 }
 
 document.addEventListener("click", function(e) {
-    // �꽕�젙 �뙣�꼸/踰꾪듉 �겢由���� �슚怨� �젣�쇅
     if (panel.contains(e.target) || e.target === btn) return;
     startShake();
     createLeaf(e.clientX, e.clientY);
     createToegeunParticle(e.clientX, e.clientY);
 });
 
-/* =========================
-   �떆怨�
-========================= */
+/* 시계 */
 function updateClock() {
-    var now = new Date(
-        new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
-    );
-
+    var now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     var currentHour   = now.getHours();
     var currentMinute = now.getMinutes();
     var currentSecond = now.getSeconds();
 
-    // �쁽�옱/�떆�옉/醫낅즺瑜� 珥� �떒�쐞 �닽�옄濡쒕쭔 鍮꾧탳 (Date 媛앹껜 議곗옉 �뾾�쓬)
-    var nowTotalSec   = currentHour * 3600 + currentMinute * 60 + currentSecond;
-    var startTotalSec = startHour   * 3600 + startMin      * 60;
-    var endTotalSec   = endHour     * 3600 + endMin        * 60;
+    var nowSec   = currentHour * 3600 + currentMinute * 60 + currentSecond;
+    var startSec = startHour   * 3600 + startMin * 60;
+    var endSec   = endHour     * 3600 + endMin   * 60;
 
     var header = document.getElementById("header");
     var text   = document.getElementById("text");
 
-    if (nowTotalSec >= startTotalSec && nowTotalSec <= endTotalSec) {
-        var totalSeconds = endTotalSec - nowTotalSec;
-        var hours        = Math.floor(totalSeconds / 3600);
-        var minutes      = Math.floor((totalSeconds % 3600) / 60);
-        var seconds      = totalSeconds % 60;
+    if (nowSec >= startSec && nowSec <= endSec) {
+        var totalSeconds = endSec - nowSec;
+        var hours   = Math.floor(totalSeconds / 3600);
+        var minutes = Math.floor((totalSeconds % 3600) / 60);
+        var seconds = totalSeconds % 60;
 
         header.textContent =
             pad(currentHour) + ":" + pad(currentMinute) + ":" + pad(currentSecond) +
@@ -448,22 +332,19 @@ function updateClock() {
             hours + txtHour() + "!!!!!!!!!!!!!!" +
             minutes + txtMinute() + "!!!!!!!!!!!!!!" +
             seconds + txtSecond() + "!!!!!!!!!!!!!! "
-        ).repeat(250);  // repeat 250 is intentional for scrolling wall of text
+        ).repeat(250);
 
     } else {
         header.textContent =
             pad(currentHour) + ":" + pad(currentMinute) + ":" + pad(currentSecond) +
             " | " + txtLeaveDone();
-
         text.textContent = (txtLeaveDone() + "!!!!!!!!!!!! ").repeat(500);
     }
 }
 
-// 珥덇린 濡쒕뱶
 loadSettings();
 updateClock();
 setInterval(updateClock, 1000);
-
 </script>
 </body>
 </html>
